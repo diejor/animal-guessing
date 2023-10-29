@@ -11,8 +11,9 @@ from typing import Optional
 
 from invoke import task
 
-PROJECT: str = "cpp-project"
+PROJECT: str = "cpp-app"
 SRC_PATH: Path = Path(__file__).parent
+# VCPKG_TOOLCHAIN = SRC_PATH / "vcpkg/scripts/buildsystems/vcpkg.cmake"
 WORKSPACE: Path = Path("/tmp/builds/cpp")
 MD5: Optional[str] = None
 BUILD_PATH: Optional[Path] = None
@@ -79,6 +80,7 @@ def do_config(c):
         "-GNinja",
         "-DCMAKE_BUILD_TYPE=RelWithDebInfo",
         "-DCMAKE_EXPORT_COMPILE_COMMANDS=1",
+        #f"-DCMAKE_TOOLCHAIN_FILE={str(VCPKG_TOOLCHAIN)}",
     ]
     c.run(" ".join(cmd), pty=True)
 
@@ -119,15 +121,24 @@ def install(c):
     cmd = ["cmake", "--install", str(build_path)]
     c.run(" ".join(cmd), env={"DESTDIR": install_path}, pty=True)
 
+@task
+def run(c):
+    """Run the installed binary."""
+    binary_path = get_install_path() / "usr/local/bin/app"
+    print("{}: running on {}".format(PROJECT, binary_path))
+    c.run(str(binary_path), pty=True)
+
 
 @task
 def clean(c):
     """Clean build directory."""
-    # Don't clean during CppCon and the week before/after
-    _, week, _ = datetime.now().isocalendar()
-    if week in (36, 37, 38):
-        print(f"I'm sorry I can't do that Dave as the current week is {week}.")
-        return
+    
+    cmp = SRC_PATH.joinpath("compile_commands.json")
+    if cmp.exists():
+        cmp.unlink()
+        print(f"Removed {cmp}")
+    else:
+        print("compile_commands.json absent. Nothing to do.")
 
     build_path = get_build_path()
     if build_path.exists():
@@ -154,7 +165,7 @@ def ls(c):
     cmd = [
         "lsd",
         "--tree",
-        "--ignore-glob vcpkg",
+       #"--ignore-glob vcpkg",
         "--ignore-glob .cache",
     ]
     c.run(" ".join(cmd), pty=True)

@@ -1,1 +1,0 @@
-/usr/bin/c++ CMakeFiles/app.dir/app_main.cpp.o -o "\$PROJECT_SOURCE_DIR/output/app" 

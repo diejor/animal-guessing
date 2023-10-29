@@ -2,8 +2,7 @@ add_executable(app app_main.cpp)
 
 # include directories here
 target_link_libraries(app PRIVATE
-    # for example
-    # input::input
-    )
+    utils
+)
 
-install(TARGETS app DESTINATION bin)
+install(TARGETS app)
