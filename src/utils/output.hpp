@@ -52,6 +52,10 @@ namespace output {
         cout << endl;
     }
 
+    inline void inform(const string& msg) {
+        cout << "  ~  " << msg << endl;
+    }
+
     /*
     *  Displays a line, used to display the header and footer of the vector table.
     */

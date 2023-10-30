@@ -5,12 +5,11 @@
  * started: 10/29/2023
  * course: CS2337.501
  *
+ * purpose:
  * structure used to represent nodes in the animal guessing game
  *
  * changelog:
  *  10/29/2023 - started animal node design
- *
- * notes:
  */
 
 #ifndef ANIMAL_NODE_HPP
@@ -32,13 +31,10 @@ namespace animal_node {
         AnimalNode* yes_branch;     // Pointer to 'Yes' branch
         AnimalNode* no_branch;      // Pointer to 'No' branch
         
-        // Ast the doc noted, if has both branches, it is a question
-        bool is_question() {
+        bool is_question() const {
             return yes_branch && no_branch;
         }
-
-        // If has no branches, it is an animal
-        bool is_animal() {
+        bool is_animal() const {
             return !yes_branch && !no_branch;
         }
     };
@@ -57,7 +53,7 @@ namespace animal_node {
      *  Debug routines
      */
     namespace debug {
-        void print_node_data(const AnimalNode& node);
+        void print_node_data(const AnimalNode& node, const string& opt = "");
     }  // namespace debug
 
 }  // namespace animal_node

@@ -36,7 +36,11 @@ namespace global {
         const bool USER_INPUT = false;
 
         // data
-        const bool ANIMAL_NODE = false;
+        const bool NODE_CREATED = false;
+
+        // guessing
+        const bool INSPECTING_NODE = false;
+        const bool FLIPPING = false;
 
     }  // namespace debug_flags
     // =----------------- END OF CONSTANTS -----------------=

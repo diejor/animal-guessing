@@ -46,7 +46,7 @@ namespace input {
      */
     inline string line(const string& msg) {
         string input;
-        output::ask_for_input(msg);
+        output::ask_for_input(msg + " : ");
         getline(cin, input);
         string no_whitespace = global::fncs::trim_whitespace(input);
         debug::user_input(no_whitespace);
