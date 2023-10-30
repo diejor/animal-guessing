@@ -1,23 +1,19 @@
-/* 
- * CS2337.501
- *
- * Global constants and functions used throughout the program.
- *
- * Changelog:
- * - Added comments
- *
- * Notes:
- */
-
 #ifndef GLOBAL_HPP
 #define GLOBAL_HPP
+/* Diego R.R.
+ * CS2337.501
+ * 
+ * Global constants and functions used throughout the program.
+ *
+ * changelog:
+ * 10/29/2023 - changed to implement animal guessing homework
+ */
+
 
 #include <iostream>
 #include <string>
 #include <vector>
 #include <tuple>
-
-#include "output.hpp"
 
 using namespace std;
 
@@ -39,10 +35,8 @@ namespace global {
         const bool TRIM_WHITESPACE = false;
         const bool USER_INPUT = false;
 
-        // linked list
-        const bool NODE_CREATION = false;
-        const bool ADDING_NODE = false;
-        const bool LINK_LIST_CONTENTS = false;
+        // data
+        const bool ANIMAL_NODE = false;
 
     }  // namespace debug_flags
     // =----------------- END OF CONSTANTS -----------------=
@@ -56,16 +50,16 @@ namespace global {
         *   Debug routines
         */
         namespace debug {
-            void stop_flow(const string& fnc) {
+            inline void stop_flow(const string& fnc) {
                 if (debug_flags::stop_flow) {
                     string msg = "stopping flow from " + fnc + ", please enter a key to continue ...";
-                    output::debug(msg);
+                    cout << "DEBUG: " << msg << endl;
                     cin.get();
                     cin.ignore(100, '\n');
                 }
             }
 
-            void trim_whitespace(
+            inline void trim_whitespace(
                 const string& input_file_name, int first_whspace_idx,
                 int last_whspace_idx, string trimmed_input_file_name
             ) {
@@ -74,23 +68,15 @@ namespace global {
                         + "\n\tfirst whitespace index: " + to_string(first_whspace_idx)
                         + "\n\tlast whitespace index: " + to_string(last_whspace_idx)
                         + "\n\ttrimmed string: \"" + trimmed_input_file_name + "\"";
-                    output::debug(msg);
+                    cout << "DEBUG: " << msg << endl;
                 }
             }
         }  // namespace debug
 
-        void assert_in_bounds(int idx, int size) {
-            if (idx < 0 || idx >= size) {
-                string msg = "index " + to_string(idx) + " is out of bounds (size: " + to_string(size) + ")";
-                output::error(msg);
-                exit(1);
-            }
-        }
-
         /*
             Used to trim leading and trailing whitespaces from the user input.
         */
-        string trim_whitespace(const string& str) {
+        inline string trim_whitespace(const string& str) {
             unsigned int first = str.find_first_not_of(' ');
             unsigned int last = str.find_last_not_of(' ');
             string trimmed_str = str.substr(first, (last - first + 1));
@@ -98,7 +84,7 @@ namespace global {
             return trimmed_str;
         }
 
-        string to_lower(const string& str) {
+        inline string to_lower(const string& str) {
             string lower_case_str;
             for (char ch : str) {
                 lower_case_str += tolower(ch);
@@ -106,7 +92,7 @@ namespace global {
             return lower_case_str;
         }
 
-        bool contains(const string& str, const string& regex) {
+        inline bool contains(const string& str, const string& regex) {
             return str.find(regex) != string::npos;
         }
 

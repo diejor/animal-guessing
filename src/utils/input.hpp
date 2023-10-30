@@ -1,5 +1,7 @@
+#ifndef INPUT_HPP
+#define INPUT_HPP
 /*
- * title: Input Handler
+ * Input Handler
  * file: input.hpp
  * author: Diego R.R.
  * started: 10/16/2023
@@ -10,12 +12,11 @@
  * changelog:
  *  10/16/2023 - initial completion
  *  10/22/2023 - integer bug fixed when non-integer input is given
+ *  10/29/2023 - changed to implement animal guessing homework, removed 
+ *  integer_within_threasold function
  *
  * notes:
  */
-
-#ifndef INPUT_HPP
-#define INPUT_HPP
 
 #include <fstream>
 #include <string>
@@ -32,9 +33,9 @@ namespace input {
      *  Debug routines
      */
     namespace debug {
-        void user_input(const string& input) {
+        inline void user_input(const string& input) {
             if (global::debug_flags::USER_INPUT) {
-                cout << "DEBUG: user input: " << input << endl;
+                output::debug("user input =" + input);
             }
         }
 
@@ -43,16 +44,16 @@ namespace input {
     /*
      *   Used to retrieve a whole line of input from the user.
      */
-    string line(const string& msg) {
+    inline string line(const string& msg) {
         string input;
         output::ask_for_input(msg);
         getline(cin, input);
-        string no_leading_preceding_whitespace = global::fncs::trim_whitespace(input);
-        debug::user_input(no_leading_preceding_whitespace);
-        return no_leading_preceding_whitespace;
+        string no_whitespace = global::fncs::trim_whitespace(input);
+        debug::user_input(no_whitespace);
+        return no_whitespace;
     }
 
-    int integer(const string& msg) {
+    inline int integer(const string& msg) {
         int input;
         output::ask_for_input(msg);
         while (!(cin >> input)) {
@@ -64,15 +65,6 @@ namespace input {
         debug::user_input(to_string(input));
         return input;
     }
-
-    int integer_within_threshold(const string& msg, int threshold) {
-        int input = integer(msg);
-        while (!(input <= threshold)) {
-            input = integer(msg + " (must be less than " + to_string(threshold + 1) + ")");
-        }
-        return input;
-    }
-
 }  // namespace input
 
 #endif  // INPUT_HPP
