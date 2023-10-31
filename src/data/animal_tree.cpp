@@ -43,7 +43,6 @@ namespace animal_tree {
         play_game(root);
     }
 
-
     /**
      * @brief Recursive function to traverse the tree and play the game.
      *
@@ -64,7 +63,6 @@ namespace animal_tree {
             string ans = input::line(question);
             if (global::fncs::contains(ans, "y")) {
                 play_game(node->yes_branch);
-
             } else {
                 play_game(node->no_branch);
             }
@@ -99,6 +97,7 @@ namespace animal_tree {
         flip_to_question(animal_node, diff, correct_animal);
 
         output::inform("Thanks for teaching me!");
+        output::separate();
     }
 
     /**

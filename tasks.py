@@ -124,10 +124,14 @@ def install(c):
 @task
 def run(c):
     """Run the installed binary."""
+    build(c)
+    install(c)
+
+    print()
     binary_path = get_install_path() / "usr/local/bin/app"
     print("{}: running on {}".format(PROJECT, binary_path))
     c.run(str(binary_path), pty=True)
-
+    print("{}: finalized".format(PROJECT))
 
 @task
 def clean(c):

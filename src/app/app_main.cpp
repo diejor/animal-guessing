@@ -22,6 +22,8 @@
  *  - 10/28/2023 - included input and output utils,
  *  - 10/29/2023 - main development of app.
  *  - see other files for changelog, for more detailed information.
+ *  - 10/30/2023
+ *    - added decisions.
  *
  * Notes:
  * - The game utilizes a decision tree mechanism for its logic.
@@ -48,19 +50,79 @@ using namespace std;
  */
 bool play_again(const string& msg) {
     string ans = input::line(msg);
-    return global::fncs::contains(ans, "y");
+    output::separate();
+    return !global::fncs::contains(ans, "y");
+}
+
+void decide_action(animal_tree::AnimalTree& tree) {
+    vector<string> selection = {
+        "Play game", 
+        "Print tree", 
+        "Save tree", 
+        "dile adios al arbol (exit tree)"
+    };
+    int choice = input::select("Now what?", selection);
+    output::separate();
+
+    switch (choice) {
+        case 1:
+            output::init_game();
+            tree.play_game();
+            break;
+        case 2:
+            tree.play_game();
+            break;
+        case 3:
+            tree.play_game();
+            break;
+        case 4:
+            break;
+        default:
+            output::error("invalid choice");
+            break;
+    }
+}
+
+animal_tree::AnimalTree init_tree() {
+    vector<string> selection = {
+        "Create from database", 
+        "Create from scratch", 
+        "Create randomly"
+    };
+    int choice = input::select(
+            "Gimme a choice to initialize the decision tree", selection);
+    output::separate();
+    animal_tree::AnimalTree tree;
+
+    switch (choice) {
+        case 1:
+            tree = animal_tree::AnimalTree();
+            break;
+        case 2:
+            tree = animal_tree::AnimalTree();
+            break;
+        case 3:
+            tree = animal_tree::AnimalTree();
+            break;
+        default:
+            output::error("invalid choice");
+            break;
+    }
+
+    return tree;
 }
 
 int main() {
-    // Initialize the game tree, using the default constructor of animal_tree::AnimalTree
-    // This will initialize the tree with a default guess of "lizard"
-    // See animal_tree.cpp for more documentation
-    animal_tree::AnimalTree tree = animal_tree::AnimalTree();
+    output::welcome();
+    output::separate();
 
-    // Game loop
+    animal_tree::AnimalTree tree;
+    
     do {
-        tree.play_game(); // see animal_tree.cpp for more documentation
-        output::separate();
-    } while (play_again("can I guess again? (y/n)"));
+        tree = init_tree();
+        decide_action(tree);
+    } while (play_again("Leaving the game :(? (y/n)"));
+
+
     return 0;
 }

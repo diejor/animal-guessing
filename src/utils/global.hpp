@@ -7,6 +7,8 @@
  *
  * changelog:
  * 10/29/2023 - changed to implement animal guessing homework
+ * 10/30/2023
+ *  - added debug flags
  */
 
 

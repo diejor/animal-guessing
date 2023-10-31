@@ -48,6 +48,12 @@ namespace input {
         string input;
         output::ask_for_input(msg + " : ");
         getline(cin, input);
+
+        if (input.empty()) {
+            output::error("input is empty");
+            return line(msg);
+        }
+
         string no_whitespace = global::fncs::trim_whitespace(input);
         debug::user_input(no_whitespace);
         return no_whitespace;
@@ -62,7 +68,23 @@ namespace input {
             cin.clear();  // Clear the error state.
             cin.ignore(100, '\n');  // Discard non-integer input.
         }
+        cin.ignore(1, '\n');  // Discard the newline character.
         debug::user_input(to_string(input));
+        return input;
+    }
+
+    inline int integer_within_range(const string& msg, int min, int max) {
+        int input = integer(msg);
+        while (input < min || input > max) {
+            output::error("input must be between " + to_string(min) + " and " + to_string(max));
+            input = integer(msg);
+        }
+        return input;
+    }
+
+    inline int select(const string& msg, const vector<string>& options) {
+        output::select(msg, options);
+        int input = integer_within_range("Enter your selection : ", 1, options.size());
         return input;
     }
 }  // namespace input
