@@ -62,22 +62,19 @@ void exit_game() {
 animal_tree::AnimalTree init_tree() {
     vector<string> selection = {
         "Create from database", 
-        "Create from scratch", 
-        "Create randomly"
+        "Create from scratch" 
     };
-    int choice = input::select(
-            "Gimme a choice to initialize the decision tree", selection);
+    int choice = input::select(global::msgs::DECISION, selection);
     output::separate();
     animal_tree::AnimalTree tree;
+    string file_path;
 
     switch (choice) {
         case 1:
+            file_path = input::line(global::msgs::INPUT_FILE_PATH);
             tree = animal_tree::AnimalTree();
             break;
         case 2:
-            tree = animal_tree::AnimalTree();
-            break;
-        case 3:
             tree = animal_tree::AnimalTree();
             break;
         default:
@@ -106,9 +103,11 @@ void decide_action(animal_tree::AnimalTree& tree) {
             tree.play_game();
             break;
         case 2:
+            output::inform("printing tree");
             tree.print_tree(cout);
             break;
         case 3:
+            output::inform("saving tree");
             output::toDO("save tree");
             break;
         case 4:
@@ -130,11 +129,10 @@ int main() {
 
     animal_tree::AnimalTree tree = init_tree();
     
-    do {
+    while (true)
         decide_action(tree);
-    } while (play_again("Leaving the game :(? (y/n)"));
 
-    exit_game();
+    output::error_nonexpected("THIS SHOULD NOT BE REACHABLE: game exists with decide_action()");
 
     return 0;
 }

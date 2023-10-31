@@ -54,6 +54,11 @@ namespace global {
             ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
         )";
 
+        // game loop
+        const string DECISION = "Gimme a choice to initialize the decision tree";
+
+        // user input
+        const string INPUT_FILE_PATH = "Enter the path to the database file: ";
 
     }  // namespace msgs
 
