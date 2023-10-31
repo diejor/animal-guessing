@@ -26,16 +26,6 @@
 
 using namespace std;
 
-const string PROGRAM_TITLE =
-"    _          _                 _    ____                     _             \n"
-"   / \\   _ __ (_)_ __ ___   __ _| |  / ___|_   _  ___  ___ ___(_)_ __   __ _ \n"
-"  / _ \\ | '_ \\| | '_ ` _ \\ / _` | | | |  _| | | |/ _ \\/ __/ __| | '_ \\ / _` |\n"
-" / ___ \\| | | | | | | | | | (_| | | | |_| | |_| |  __/\\__ \\__ \\ | | | | (_| |\n"
-"/_/___\\_\\_| |_|_|_| |_| |_|\\__,_|_|  \\____|\\__,_|\\___||___/___/_|_| |_|\\__, |\n"
-" / ___| __ _ _ __ ___   ___                                             \\___/ \n"
-"| |  _ / _` | '_ ` _ \\ / _ \\                                                 \n"
-"| |_| | (_| | | | | | |  __/                                                 \n"
-" \\____|\\__,_|_| |_| |_|\\___|                                                 ";
 
 namespace output {
     inline void ask_for_input(const string& msg) {
@@ -43,11 +33,19 @@ namespace output {
     }
 
     inline void error(const string& msg) {
+        cout << "ERROR: " << msg << endl;
+    }
+
+    inline void error_nonexpected(const string& msg) {
         cout << "ERROR NOT EXPECTED: " << msg << endl;
     }
 
     inline void debug(const string& msg) {
         cout << "DEBUG: " << msg << endl;
+    }
+
+    inline void debug(const string& msg, const string& opt) {
+        cout << "DEBUG: " << msg << opt << endl;
     }
 
     inline void toDO(const string& msg) {
@@ -69,20 +67,16 @@ namespace output {
     }
 
     inline void welcome() {
-        cout << PROGRAM_TITLE << endl;
+        cout << global::msgs::PROGRAM_TITLE << endl;
     }
 
     inline void init_game() {
-        cout << "\n~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n";
-        cout << "             Welcome to the Animal Guess Game!         \n";
-        cout << "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n";
+        cout << global::msgs::INIT_GAME << endl;
+        separate();
+    }
 
-        cout << "\nIn this game, I will become an investigator to guess the animal you are" <<
-           "thinking of by asking -.- you questions.\n";
-        cout << "All you need to do is answer my questions with a 'y' for yes or 'n' for no.\n";
-        cout << "Certainly if I can't guess the correct animal, then I will learn from my mistakes!\n";
-        cout << "By the end, I'll become smarter and better at this game and maybe conquest the world.\n";
-        cout << "\nAre you ready to challenge me? Let the game begin!\n";
+    inline void goodbye() {
+        cout << global::msgs::GOODBYE << endl;
     }
 
     /*

@@ -16,6 +16,7 @@
 #ifndef ANIMAL_TREE_HPP
 #define ANIMAL_TREE_HPP
 
+#include <fstream>
 #include "animal_node.hpp"
 
 using namespace std;
@@ -32,6 +33,8 @@ namespace animal_tree {
         // traverse the tree and play the game
         void play_game();
 
+        // print tree to ofstream 
+        void print_tree(ostream& output_file);
     private:
         // Recursive function to traverse the tree and play the game
         void play_game(animal_node::AnimalNode* root);
@@ -45,6 +48,9 @@ namespace animal_tree {
                 const string& question, 
                 const string& correct_animal
         );
+
+        // recursive function to ofstream handling
+        void print_tree(ostream& output_stream, animal_node::AnimalNode* root, int level);
     }; 
 
     // Debug routines

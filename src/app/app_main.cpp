@@ -54,33 +54,9 @@ bool play_again(const string& msg) {
     return !global::fncs::contains(ans, "y");
 }
 
-void decide_action(animal_tree::AnimalTree& tree) {
-    vector<string> selection = {
-        "Play game", 
-        "Print tree", 
-        "Save tree", 
-        "dile adios al arbol (exit tree)"
-    };
-    int choice = input::select("Now what?", selection);
-    output::separate();
-
-    switch (choice) {
-        case 1:
-            output::init_game();
-            tree.play_game();
-            break;
-        case 2:
-            tree.play_game();
-            break;
-        case 3:
-            tree.play_game();
-            break;
-        case 4:
-            break;
-        default:
-            output::error("invalid choice");
-            break;
-    }
+void exit_game() {
+    output::goodbye();
+    exit(0);
 }
 
 animal_tree::AnimalTree init_tree() {
@@ -108,21 +84,57 @@ animal_tree::AnimalTree init_tree() {
             output::error("invalid choice");
             break;
     }
+    output::separate();
 
     return tree;
+}
+
+void decide_action(animal_tree::AnimalTree& tree) {
+    vector<string> selection = {
+        "Play game", 
+        "Print tree", 
+        "Save tree", 
+        "dile adios al arbol (new tree)",
+        "Exit of Game"
+    };
+    int choice = input::select("Now what?", selection);
+    output::separate();
+
+    switch (choice) {
+        case 1:
+            output::init_game();
+            tree.play_game();
+            break;
+        case 2:
+            tree.print_tree(cout);
+            break;
+        case 3:
+            output::toDO("save tree");
+            break;
+        case 4:
+            tree = init_tree();
+            break;
+        case 5:
+            exit_game();
+            break;
+        default:
+            output::error("invalid choice");
+            break;
+    }
+    output::separate();
 }
 
 int main() {
     output::welcome();
     output::separate();
 
-    animal_tree::AnimalTree tree;
+    animal_tree::AnimalTree tree = init_tree();
     
     do {
-        tree = init_tree();
         decide_action(tree);
     } while (play_again("Leaving the game :(? (y/n)"));
 
+    exit_game();
 
     return 0;
 }

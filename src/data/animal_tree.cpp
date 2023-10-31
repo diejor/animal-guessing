@@ -14,11 +14,11 @@
  */
 
 #include "animal_tree.hpp"
+#include <iostream>
 #include "animal_node.hpp"
 #include "global.hpp"
 #include "input.hpp"
 #include "output.hpp"
-#include <iostream>
 
 using namespace std;
 using namespace animal_node;
@@ -90,9 +90,8 @@ namespace animal_tree {
      */
     void AnimalTree::expand_animal_guess(AnimalNode*& animal_node) {
         string correct_animal = input::line("What animal were you thinking of?");
-        string diff = input::line(
-                "What question identifies " + animal_node->str + 
-                " from " + correct_animal + "? (yes for " + correct_animal + ")");
+        string diff = input::line("What question identifies " + animal_node->str + " from " +
+                                  correct_animal + "? (yes for " + correct_animal + ")");
 
         flip_to_question(animal_node, diff, correct_animal);
 
@@ -111,11 +110,8 @@ namespace animal_tree {
      * @param question The differentiating question.
      * @param correct_animal The correct animal guessed by the user.
      */
-    void AnimalTree::flip_to_question(
-            AnimalNode*& animal_node,
-            const string& question, 
-            const string& correct_animal
-    ) {
+    void AnimalTree::flip_to_question(AnimalNode*& animal_node, const string& question,
+                                      const string& correct_animal) {
         AnimalNode* yes_node = alloc_animal(correct_animal);
         AnimalNode* no_node = alloc_animal(animal_node->str);
         animal_node->str = question;
@@ -123,6 +119,30 @@ namespace animal_tree {
         animal_node->no_branch = no_node;
 
         debug::flip_to_question(*animal_node);
+    }
+
+    // public print tree function
+    void AnimalTree::print_tree(ostream& output_stream) {
+        print_tree(output_stream, root, 0);
+    }
+
+    // recursive print tree function
+    void AnimalTree::print_tree(ostream& output_stream, AnimalNode* root, int level) {
+        if (!root) {
+            return;
+        }
+
+        for (int i = 0; i < level; i++) {
+            output_stream << " ";
+        }
+
+        if (root->is_question()) {
+            output_stream << "Q " << root->str << endl;
+            print_tree(output_stream, root->yes_branch, level + 1);
+            print_tree(output_stream, root->no_branch, level + 1);
+        } else {
+            output_stream << "G " << root->str << endl;
+        }
     }
 
     namespace debug {
@@ -157,9 +177,6 @@ namespace animal_tree {
                 animal_node::debug::print_node_data(node, "Flipping animal to ");
             }
         }
-    }
-
-
+    }  // namespace debug
 
 }  // namespace animal_tree
-
