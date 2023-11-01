@@ -1,0 +1,41 @@
+# some mithological creatures from greek mythology
+
+Q
+Does it have the head of a human?
+
+    G
+    Sphinx
+
+    Q
+    Is it a horse with a single horn?
+
+        G
+        Unicorn
+
+        Q
+        Is it half-human and half-horse?
+
+            G
+            Centaur
+# CHECKING FOR COMMENT !!!!!!!!!!!!
+            Q
+            Does it turn people into stone with its gaze?
+
+                G
+                Medusa
+
+                Q
+                Is it a giant bird?
+
+                    G
+                    Phoenix
+
+                    Q
+                    Does it have multiple heads?
+
+                        G
+                        Hydra
+
+
+                                    G
+                                    Siren

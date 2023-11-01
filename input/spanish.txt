@@ -1,0 +1,28 @@
+# NOTE THAT I CAN ADD COMMENTS
+
+Q
+¿Es un mamífero?
+    Q
+    ¿Vive en la selva?
+        G
+        Jaguar
+        Q
+        Is it known for its long nose?
+            G
+            Anteater
+            G
+            Capibara
+    Q
+    Does it fly?
+        G
+        Harpy eagle
+        Q
+        ¿Es un ave colorida?
+            G
+            Guacamaya
+            Q
+            ¿Es venenoso?
+                G
+                Cascabel
+                G
+                Tucán

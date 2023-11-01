@@ -1,0 +1,42 @@
+Q
+Is it a domestic animal?
+Q
+Does it bark?
+G
+Dog
+G
+Cat
+Q
+Is it a marine animal?
+Q
+Does it have a long snout and tusks?
+G
+Walrus
+G
+Dolphin
+Q
+Is it a bird?
+Q
+Does it sing melodiously?
+G
+Nightingale
+Q
+Is it known for its beautiful tail feathers?
+G
+Peacock
+G
+Eagle
+Q
+Is it a reptile?
+Q
+Can it change its skin color?
+G
+Chameleon
+G
+Snake
+Q
+Is it a farm animal?
+G
+Cow
+G
+Sheep

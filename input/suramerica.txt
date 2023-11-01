@@ -1,0 +1,30 @@
+Q
+¿Es un mamífero?
+    Q
+    ¿Vive en la selva?
+        G
+        Jaguar
+        Q
+        Does it live in the mountains?
+            G
+            Llama
+            G
+            Armadillo
+# I know that the armadillo is not a mountain animal, 
+# but it is the only one that I could think of that is 
+# not a mammal and lives in the mountains.
+    Q
+    Is it the king of the Andean skies?
+        G
+        Cóndor
+        Q
+        Does it primarily live in water?
+            G
+            Capibara
+            Q
+            Does it have scales and is it venomous?
+                G
+                Anaconda
+                G
+                Tucán
+
