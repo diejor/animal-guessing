@@ -17,6 +17,8 @@
  *
  * changelog:
  *  10/29/2023 - initial implementation, added debug function, added alloc functions
+ *  10/30/2023 - added play_game headers
+ *  10/31/2023 - ostream headers
  *
  * notes:
  * - Ensure proper memory management to avoid memory leaks.

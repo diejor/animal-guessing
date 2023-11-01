@@ -30,6 +30,9 @@ namespace animal_tree {
         // Default constructor
         AnimalTree();
 
+        // Constructor from database
+        AnimalTree(const vector<string>& tokens);
+
         // traverse the tree and play the game
         void play_game();
 
@@ -58,6 +61,7 @@ namespace animal_tree {
         void print_tree(const AnimalTree& tree);
         void inspecting_node(const animal_node::AnimalNode& node, const string& opt = "");
         void flip_to_question(const animal_node::AnimalNode& node);
+        void print_step(const string& content, int index, int size, const string& str);
     } 
 
 }  // namespace animal_tree

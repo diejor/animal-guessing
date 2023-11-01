@@ -89,6 +89,7 @@ namespace parser {
         }
     }
 
+
     /*
     A helper function for get_next_token_line. All comment and empty lines that
    should be ignored by the parser are handled by this function.
@@ -104,21 +105,37 @@ namespace parser {
         }
     }
 
-    /*
-    This function is used for to read lines fom the blocks of tokens.
+    inline bool only_whitespace(const string& str) {
+        if (str.empty())  // empty is considered whitespace
+            return false;
+        for (char ch : str) {
+            if (ch != ' ') {
+                return false;
+            }
+        }
+        return true;
+    }
 
-*/
+    /*
+     * This function is used for to read lines fom the blocks of tokens.
+    */
     inline string get_next_token_line(ifstream& input_file) {
         advance_to_token(input_file);
         string token_line;
         getline(input_file, token_line);
+
+        // THIS MIGHT CAUSE BUGS SINCE IT ASSUMES THAT IT CAN KEEP READING TOKEN LINES
+        if (only_whitespace(token_line))
+           return get_next_token_line(input_file);
+
+        token_line = global::fncs::trim_whitespace(token_line);
         parser::debug::token_line(token_line);
         return token_line;
     }
 
     /*
-    This function is used to get the rows of the soup.
-*/
+     * This function is used to get the rows of the soup.
+    */
     inline vector<string> get_token_block(ifstream& input_file, unsigned int block_size) {
         vector<string> token_block;
         while (token_block.size() < block_size) {
@@ -129,57 +146,6 @@ namespace parser {
     }
 
     /*
-    Because the parser read the rows of the soup of letters as strings
-   representing a line of letters (e.i "ABDFAFWEA"), this function is needed to
-   convert the soup of letters from the vector of letter strings to a vector of
-   vectors of chars.
-
-    Example:
-        1. vector<string> soup_str =   {"ABDFAFWEA",
-                                        "ABDFAFWEA",
-                                        "ABDFAFWEA"};
-        2. vector<vector<char>> soup_char =
-            {{'A', 'B', 'D', 'F', 'A', 'F', 'W', 'E', 'A'},
-            {'A', 'B', 'D', 'F', 'A', 'F', 'W', 'E', 'A'},
-            {'A', 'B', 'D', 'F', 'A', 'F', 'W', 'E', 'A'}};
-
-    This conversion is needed since the movie searcher algorithm uses a vector
-   of vectors of chars to represent the soup of letters instead of a vector of
-   strings.
-
-    If an empty vector of strings is passed, an empty vector of vectors of chars
-   should be returned.
-*/
-    inline vector<vector<char>> soup_str_to_char(const vector<string>& soup_str) {
-        vector<vector<char>> soup_char;
-        for (const string& line : soup_str) {
-            vector<char> line_char;
-            for (char letter : line) {
-                line_char.push_back(letter);
-            }
-            soup_char.push_back(line_char);
-        }
-        return soup_char;
-    }
-
-    /*
-    It's expected to be the first parser function called to read tokens from the
-   input file. The function assumes that the first token line is the dimensions
-   of the soup of letters and then reads the subsequent lines to form the soup
-   of letters.
-*/
-    inline vector<vector<char>> soup_letters(ifstream& input_file) {
-        string soup_dim_line = get_next_token_line(input_file);
-        int num_rows = stoi(soup_dim_line);
-        int num_cols = stoi(soup_dim_line);
-        vector<string> soup_str = get_token_block(input_file, num_rows);
-        vector<vector<char>> soup = soup_str_to_char(soup_str);
-        debug::soup_of_letters(soup);
-        debug::soup_of_letters_dim(num_rows, num_cols);
-        return soup;
-    }
-
-    /*
     This function is used to read the movie titles to search tokens. Notice that
    is practically the same to get_token_block() but it doesn't have a block size
    parameter which means that the file will be consumed after this function is
@@ -187,6 +153,7 @@ namespace parser {
 */
     inline vector<string> consume_file(ifstream& input_file) {
         vector<string> token_block;
+        output::inform("reading input file ...");
         while (!is_file_empty(input_file)) {
             string token_line = get_next_token_line(input_file);
             token_block.push_back(token_line);
@@ -202,21 +169,6 @@ namespace parser {
         }
 
         return token_block;
-    }
-
-    /*
-    It is assumed that before this function is called, the soup block of tokens
-   was already read from the input file.
-
-    Basically a wrapper function of consume_file() to convey a clearer meaning
-   of what consume_file() is used for.
-
-    One concern to be aware of is that this function essentially consumes the
-   rest of the input file.
-*/
-    inline vector<string> movies_to_search(ifstream& input_file) {
-        vector<string> movie_titles_to_search = consume_file(input_file);
-        return movie_titles_to_search;
     }
 
     // ----------------------------------------
@@ -237,34 +189,6 @@ namespace parser {
         inline void token_line(string token_line) {
             if (global::debug_flags::TOKEN_LINE) {
                 output::debug("token line: ", token_line);
-            }
-        }
-
-        inline void soup_of_letters_dim(int rows, int cols) {
-            if (global::debug_flags::SOUP_OF_LETTERS_DIM) {
-                output::debug("soup of letters dimensions: ",
-                              to_string(rows) + "x" + to_string(cols));
-            }
-        }
-
-        inline void soup_of_letters(vector<vector<char>> soup_of_letters) {
-            if (global::debug_flags::SOUP_OF_LETTERS) {
-                output::debug("soup of letters ");
-                for (vector<char> line : soup_of_letters) {
-                    for (char letter : line) {
-                        cout << letter << " ";
-                    }
-                    cout << endl;
-                }
-            }
-        }
-
-        inline void movies_to_search(vector<string> movie_titles_to_search) {
-            if (global::debug_flags::MOVIE_TITLES) {
-                output::debug("vector of movie titles to search: ");
-                for (string movie : movie_titles_to_search) {
-                    output::debug(movie);
-                }
             }
         }
     }  // namespace debug

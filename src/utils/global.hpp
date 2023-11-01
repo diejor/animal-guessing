@@ -1,15 +1,25 @@
+/* 
+ * =====================================================================================
+ *  Author: Diego R.R.
+ *  Course: CS2337.501
+ *  Description: 
+ *      - This header file contains global constants and functions used throughout the 
+ *        program.
+ *      - To enable debugging tools, simply set the appropriate flag inside the 
+ *        `debug_flags` namespace to `true`.
+ *
+ *  Changelog:
+ *  -------------------------------------------------------------------------------------
+ *      Date        |               Changes
+ *  -------------------------------------------------------------------------------------
+ *  10/29/2023     | Changed to implement animal guessing homework.
+ *  10/30/2023     | Added debug flags.
+ *  10/31/2023     | trim_whitespace fixed to handle empty strings.
+ *  =====================================================================================
+ */
+
 #ifndef GLOBAL_HPP
 #define GLOBAL_HPP
-/* Diego R.R.
- * CS2337.501
- * 
- * Global constants and functions used throughout the program.
- *
- * changelog:
- * 10/29/2023 - changed to implement animal guessing homework
- * 10/30/2023
- *  - added debug flags
- */
 
 #include <iostream>
 #include <string>
@@ -59,12 +69,34 @@ namespace global {
 
         // user input
         const string INPUT_FILE_PATH = "Enter the path to the database file: ";
+        const string OUTPUT_FILE_PATH = "Enter the path to the output file: ";
+        const string ENTER_FILE_NAME = "Enter the file name: ";
+        const string ENTER_FILE_NAME_AGAIN = "Enter the file name again: ";
+
 
     }  // namespace msgs
 
     namespace debug_flags {
         const bool stop_flow = false;
-
+/* 
+ * =====================================================================================
+ *  Author: Diego R.R.
+ *  Course: CS2337.501
+ *  Description: 
+ *      - This header file contains global constants and functions used throughout the 
+ *        program.
+ *      - To enable debugging tools, simply set the appropriate flag inside the 
+ *        `debug_flags` namespace to `true`.
+ *
+ *  Changelog:
+ *  -------------------------------------------------------------------------------------
+ *      Date        |               Changes
+ *  -------------------------------------------------------------------------------------
+ *  10/29/2023     | Changed to implement animal guessing homework.
+ *  10/30/2023     | Added debug flags.
+ *  10/31/2023     | trim_whitespace fixed to handle empty strings.
+ *  =====================================================================================
+ */
         // main
         const bool INIT_VECTOR = false;
         const bool INIT_VECTOR_ADDING = false;
@@ -77,9 +109,6 @@ namespace global {
         const bool EMPTY_FILE = false;
         const bool IGNORING_COMMENT_LINE = false;
         const bool TOKEN_LINE = false;
-        const bool SOUP_OF_LETTERS_DIM = false;
-        const bool SOUP_OF_LETTERS = false;
-        const bool MOVIE_TITLES = false;
 
         // data
         const bool NODE_CREATED = false;
@@ -87,6 +116,9 @@ namespace global {
         // guessing
         const bool INSPECTING_NODE = false;
         const bool FLIPPING = false;
+
+        // printing
+        const bool PRINT_STEP = false;
 
     }  // namespace debug_flags
     // =----------------- END OF CONSTANTS -----------------=
@@ -121,11 +153,14 @@ namespace global {
                 }
             }
         }  // namespace debug
-
-        /*
+        
+       /*
             Used to trim leading and trailing whitespaces from the user input.
         */
         inline string trim_whitespace(const string& str) {
+            if (str.empty()) {
+                return str;
+            }
             unsigned int first = str.find_first_not_of(' ');
             unsigned int last = str.find_last_not_of(' ');
             string trimmed_str = str.substr(first, (last - first + 1));
@@ -142,7 +177,9 @@ namespace global {
         }
 
         inline bool contains(const string& str, const string& regex) {
-            return str.find(regex) != string::npos;
+            string str_lower = to_lower(str);
+            string regex_lower = to_lower(regex);
+            return str_lower.find(regex_lower) != string::npos;
         }
 
     }  // namespace fncs
